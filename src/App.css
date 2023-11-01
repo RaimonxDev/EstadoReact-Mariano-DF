@@ -1,0 +1,34 @@
+
+.container {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 350px;
+  height: 530px;
+  border-radius: 20px;
+  margin-top: 50px; 
+}
+
+.icon {
+  font-size: 25px; /* Aumenta el tamaño del icono (ajusta según tus preferencias) */
+  width: 50px; /* Establece el ancho deseado para el icono circular */
+  height: 50px; /* Establece la altura deseada para el icono circular */
+  border: 2px solid #333; /* Borde circular con grosor de 2px y color gris (#333) */
+  border-radius: 50%; /* Border-radius del 50% para hacerlo circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.error {
+  padding: 10px;
+  color: white;
+  background-color: red;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 10px;
+  }
+  
