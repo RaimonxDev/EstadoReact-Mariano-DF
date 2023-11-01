@@ -1,15 +1,12 @@
 import Alert from 'react-bootstrap/Alert';
 
-function BasicExample() {
+// eslint-disable-next-line react/prop-types
+function BasicExample({message, type}) {
   return (
     <>
-      {[
-        'danger',
-      ].map((variant) => (
-        <Alert key={variant} variant={variant}>
-          Completa todos los campos!
-        </Alert>
-      ))}
+     <Alert variant={type}>
+          {message}
+      </Alert>
     </>
   );
 }

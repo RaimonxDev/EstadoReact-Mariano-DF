@@ -1,7 +1,5 @@
-import React from 'react'
 import SocialButton from './SocialButton'
 import Formulario from './Formulario'
-import Alert from './Alert'
 import { BsFacebook } from 'react-icons/bs';
 import { BsGithub } from 'react-icons/bs';
 import { FaLinkedinIn } from 'react-icons/fa';
@@ -22,8 +20,6 @@ const Registro = () => {
     />
     <p>O usa tu email para registrarte</p>
         <Formulario/>
-    
-    <Alert />
     </div>
 
 
