@@ -15,120 +15,89 @@ const Formulario = () => {
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  const [ nombre, setNombre ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ pass, setPass ] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
   const [isSamePass, setIsSamePass] = useState(false);
 
-  const [ errors, setErrors ] = useState({});
+  const [errors, setErrors] = useState([]);
 
+  const handleControl = (e) => {
+    console.log('INPUT =>', e.target.value)
+    const { value } = e.target
 
-  const handleName = (e) => { 
-    const { value } = e.target;
-    setNombre(value);
     if (!value) {
-      setErrors([...errors, FIELD_IS_NAME_REQUIRED ]);
+      setErrors([...errors, FIELD_IS_NAME_REQUIRED])
       return;
-    }
-  };  
-
-  const handleEmail = (e) => { 
-    const { value } = e.target;
-    setEmail(value);
-    if (!value) {
-      setErrors([...errors, FIELD_IS_EMAIL_REQUIRED ]);
-      return;
-    }
-    if (!emailRegex.test(value)) { 
-      setErrors([...errors, FIELD_IS_EMAIL_INVALID]);
-      return;
-    }
-  };  
-
-  const handlePassword = (e) => { 
-    const { value } = e.target;
-    setPass(value);
-    if (!value) {
-      setErrors([...errors, FIELD_IS_PASS_REQUIRED]);
-      return;
-    }
-  }; 
-  
-  const handleRepeatPass = (e) => {
-    const { value } = e.target;	
-    if (!value) {
-      setErrors([...errors, PASS_NOT_MATCH]);
-      return
-    }
-    if (value !== pass) {
-      setErrors([...errors, PASS_NOT_MATCH]);
-    }
-    if (errors.includes(PASS_NOT_MATCH)) {
-      const newErrors = errors.filter((error) => error !== PASS_NOT_MATCH);
-      setErrors(newErrors);
-    }
-    setIsSamePass(true);
+    }     
+    setNombre(value)
+    setErrors([])
   }
 
+  console.log(errors)
+
+  
   const submit = (e) => {
     e.preventDefault();
-    if (!nombre) { 
-      alert('El nombre es requerido')
-     }
-    if (!email) {
-    alert('El email es requerido')
+    if (!nombre) {
+      setErrors([...errors, 'un error']);
+      // setErrors([...error, FIELD_IS_NAME_REQUIRED]);
     }
-    if (!pass) {
-    alert('El password es requerido')
+    if (email === '') {
+      setErrors([...errors, FIELD_IS_EMAIL_REQUIRED]);
     }
+    if (!emailRegex.test(email)) {
+      setErrors([...errors, FIELD_IS_EMAIL_INVALID]);
+    }
+    if (pass === '') {
+      setErrors([...errors, FIELD_IS_PASS_REQUIRED]);
+    }
+    if (!isSamePass) {
+      setErrors([...errors, PASS_NOT_MATCH]);
+    }
+
+    console.log(errors)
   }
-
-
-  return (
-    <div>
-      <Form onSubmit={submit} >
-        <Form.Control className="mb-3"
-          type="text"
-          name="firstName"
-          placeholder="Nombre"
-          value={nombre}
-          onChange={handleName}
-        />
-        <Form.Group >
+   
+    return (
+      <div>
+        <Form onSubmit={submit} >
           <Form.Control className="mb-3"
-            type="email"
-            name="email"
-            placeholder="tuemail@ejemplo.com"
-            value={email}
-            onChange={handleEmail}
+            type="text"
+            name="firstName"
+            placeholder="Nombre"
+            // onChange={e => setNombre(e.target.value)}
+            onChange={handleControl}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control className="mb-3"
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            value={pass}
-            onChange={handlePassword}
-          />
-          <Form.Control className="mb-3"
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirma tu contraseña"  
-            onChange={handleRepeatPass}
-          />
-        </Form.Group>
-          <Button type='submit' variant="success"  className='w-100 mb-2'>
+          <Form.Group >
+            <Form.Control className="mb-3"
+              type="email"
+              name="email"
+              placeholder="tuemail@ejemplo.com"
+              onChange={e => setEmail(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Control className="mb-3"
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              onChange={e => setPass(e.target.value)}
+            />
+            <Form.Control className="mb-3"
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirma tu contraseña"
+              onChange={e => setIsSamePass(e.target.value === pass)}
+            />
+          </Form.Group>
+          <Button type='submit' variant="success" className='w-100 mb-2'>
             Registrarse
-        </Button>
-        
-
-        {/* {errors.map(e => {
-          <Alert message={`${e}<br>` } />
-        } ) } */}
+          </Button>
+      
         </Form>
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 export default Formulario;
