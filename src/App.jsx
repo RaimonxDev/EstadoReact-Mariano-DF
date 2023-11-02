@@ -6,9 +6,9 @@ import './App.css';
 function App() {
   return (
     <>
-  <div className="container">  
-<Registro />
-</div>
+      <div className="container">  
+        <Registro />
+      </div>
     </>
   );
 }
