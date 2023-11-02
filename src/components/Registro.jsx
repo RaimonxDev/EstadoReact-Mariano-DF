@@ -20,7 +20,7 @@ const Registro = () => {
     git={<BsGithub />} 
     link={<FaLinkedinIn />}
     />
-    <p>O usa tu email para registrarte</p>
+    <p style={{ textAlign: 'center' }}>O usa tu email para registrarte</p>
         <Formulario/>
     
     <Alert />
