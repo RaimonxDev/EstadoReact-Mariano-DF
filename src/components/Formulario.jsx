@@ -22,6 +22,7 @@ const Formulario = () => {
 
   const [errors, setErrors] = useState([]);
 
+  // ESTO ES SOLO PRUEBA 
   const handleControl = (e) => {
     console.log('INPUT =>', e.target.value)
     const { value } = e.target
@@ -34,30 +35,32 @@ const Formulario = () => {
     setErrors([])
   }
 
-  console.log(errors)
-
-  
   const submit = (e) => {
+    console.log('call submit')
     e.preventDefault();
     if (!nombre) {
-      setErrors([...errors, 'un error']);
-      // setErrors([...error, FIELD_IS_NAME_REQUIRED]);
+      console.log('falta el nombre')
+      setErrors([...errors, FIELD_IS_NAME_REQUIRED]);
     }
+    // Porque aqui no setea el error? 
+    console.log('Aqui ya pasamos la validacion del nambre y este es el estado del error =>',errors)
+    
     if (email === '') {
+      console.log('falta el email')
       setErrors([...errors, FIELD_IS_EMAIL_REQUIRED]);
     }
-    if (!emailRegex.test(email)) {
-      setErrors([...errors, FIELD_IS_EMAIL_INVALID]);
-    }
-    if (pass === '') {
-      setErrors([...errors, FIELD_IS_PASS_REQUIRED]);
-    }
-    if (!isSamePass) {
-      setErrors([...errors, PASS_NOT_MATCH]);
-    }
+    // if (!emailRegex.test(email)) {
+    //   setErrors([...errors, FIELD_IS_EMAIL_INVALID]);
+    // }
+    // if (pass === '') {
+    //   setErrors([...errors, FIELD_IS_PASS_REQUIRED]);
+    // }
+    // if (!isSamePass) {
+    //   setErrors([...errors, PASS_NOT_MATCH]);
+    // }
+  }
 
     console.log(errors)
-  }
    
     return (
       <div>
@@ -67,14 +70,14 @@ const Formulario = () => {
             name="firstName"
             placeholder="Nombre"
             // onChange={e => setNombre(e.target.value)}
-            onChange={handleControl}
+            // onChange={handleControl}
           />
           <Form.Group >
             <Form.Control className="mb-3"
               type="email"
               name="email"
               placeholder="tuemail@ejemplo.com"
-              onChange={e => setEmail(e.target.value)}
+              // onChange={e => setEmail(e.target.value)}
             />
           </Form.Group>
           <Form.Group>
@@ -82,13 +85,13 @@ const Formulario = () => {
               type="password"
               name="password"
               placeholder="Contraseña"
-              onChange={e => setPass(e.target.value)}
+              // onChange={e => setPass(e.target.value)}
             />
             <Form.Control className="mb-3"
               type="password"
               name="confirmPassword"
               placeholder="Confirma tu contraseña"
-              onChange={e => setIsSamePass(e.target.value === pass)}
+              // onChange={e => setIsSamePass(e.target.value === pass)}
             />
           </Form.Group>
           <Button type='submit' variant="success" className='w-100 mb-2'>
