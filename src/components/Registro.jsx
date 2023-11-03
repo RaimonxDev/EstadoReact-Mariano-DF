@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
 import SocialButton from './SocialButton';
 import Formulario from './Formulario';
 import Alert from './Alert';
 
 const Registro = ({error, setError}) => {
-
-  const handleFormSubmit = (error) => {
-    setError(error);
-  };
 
   return (
     <div>
@@ -17,13 +12,11 @@ const Registro = ({error, setError}) => {
       <SocialButton face={"face"} git={"git"} link={"link"} />
       <p style={{ textAlign: 'center' }}>O usa tu email para registrarte</p>
 
-      <Formulario onFormSubmit={handleFormSubmit} />
+      <Formulario error={error} setError={setError} />
 
-      
-      
-{error.error && (
-  <Alert error={error.error} msg={error.msg} color={error.color} />
-)}
+      {error.error && (
+        <Alert error={error.error} msg={error.msg} color={error.color} />
+      )}
 
 
     </div>

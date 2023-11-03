@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-const Formulario = ({ }) => {
+const Formulario = ({error, setError}) => {
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
-  const [error, setError] = useState({ error: false, msg: '', color: '' });
 
   const validarDatos = (e) => {
     e.preventDefault();
@@ -91,11 +90,6 @@ const Formulario = ({ }) => {
           Registrarse
         </Button>
       </Form>
-      {error.error && error.msg && (
-        <div className={`alert alert-${error.color}`} role="alert">
-          {error.msg}
-        </div>
-      )}
     </div>
   );
 };
