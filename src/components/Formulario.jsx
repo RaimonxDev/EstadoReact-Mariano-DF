@@ -1,106 +1,101 @@
-/* eslint-disable no-unused-vars */
-import { useState} from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Alert from './Alert';
 
-const Formulario = () => {
+const Formulario = ({ }) => {
+  const [formData, setFormData] = useState({
+    nombre: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [error, setError] = useState({ error: false, msg: '', color: '' });
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  const [ nombre, setNombre ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ pass, setPass ] = useState('');
-  
-  const [isSamePass, setIsSamePass] = useState(false);
-  const [isValidEmail, setIsValidEmail] = useState(false);
-  
-  const [toucheForm, setToucheForm] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-
-  const [errors, setErrors] = useState(false);
-  
-  const submit = (e) => {
+  const validarDatos = (e) => {
     e.preventDefault();
-    if (!nombre || !email || !pass || !isSamePass) {
-      setShowAlert(true);
-      setErrors(true)
-      return;
-    }
-    if (!emailRegex.test(email)) {
-      setShowAlert(true);
-      setErrors(true)
-      return;
-    } else {
-      setIsValidEmail(true)
-    }
-    if (!isSamePass) {
-      setShowAlert(true);
-      setErrors(true)
-      setIsSamePass(false)
-      return
-    }
-
-    resetState(e);
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
-  }
-
-  const resetState = (event) => {
-    event.target.reset();
-    setEmail('');
-    setNombre('');
-    setPass('');
-    setErrors(false);
-    setIsSamePass(false);
-    setIsValidEmail(false);
-    setToucheForm(false);
-   }
+    const { nombre, email, password, confirmPassword } = formData;
+    const validarDatos = !nombre || !email || !password || !confirmPassword;
+    const validarPassword = password !== confirmPassword;
   
+    if (validarDatos) {
+      setError({
+        error: true,
+        msg: 'Completa todos los campos',
+        color: 'warning',
+      });
+    } else if (validarPassword) {
+      setError({
+        error: true,
+        msg: 'Las contraseñas no coinciden',
+        color: 'danger',
+      });
+    } else {
+      setError({
+        error: true,
+        msg: 'Cuenta creada exitosamente',
+        color: 'success',
+      });
+      setFormData({
+        nombre: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <div>
-      <Form onSubmit={submit} >
-        <Form.Control className="mb-3"
+      <Form onSubmit={(e) => validarDatos(e)} style={{ width: '300px' }}>
+        <Form.Control
+          className="mb-3"
           type="text"
-          name="firstName"
+          name="nombre"
           placeholder="Nombre"
-          onChange={e => setNombre(e.target.value)}
-          isInvalid={toucheForm && errors}
+          onChange={handleChange}
+          value={formData.nombre}
         />
-        <Form.Group >
-          <Form.Control className="mb-3"
+        <Form.Group>
+          <Form.Control
+            className="mb-3"
             type="email"
             name="email"
             placeholder="tuemail@ejemplo.com"
-            onChange={e => setEmail(e.target.value)}
-            isInvalid={toucheForm && (errors)}
+            onChange={handleChange}
+            value={formData.email}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Control className="mb-3"
+          <Form.Control
+            className="mb-3"
             type="password"
             name="password"
             placeholder="Contraseña"
-            onChange={e => setPass(e.target.value)}
-            isInvalid={toucheForm && (errors || !isSamePass)}
-          />
-          <Form.Control className="mb-3"
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirma tu contraseña"  
-            onChange={e => setIsSamePass(e.target.value === pass)}
-            isInvalid={toucheForm && (errors || !isSamePass)}
+            onChange={handleChange}
+            value={formData.password}
           />
         </Form.Group>
-          <Button type='submit' variant="success"  className='w-100 mb-2'>
-            Registrarse
+        <Form.Control
+          className="mb-3"
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirma tu contraseña"
+          onChange={handleChange}
+          value={formData.confirmPassword}
+        />
+        <Button type="submit" variant="success" className="w-100 mb-2">
+          Registrarse
         </Button>
-      
-         { toucheForm || showAlert ?  <Alert message={errors ? 'debe de completar los datos' : 'Se ha registrado correctamente'  } type={errors ? 'danger' : 'success' } /> : null}
-        
-        </Form>
+      </Form>
+      {error.error && error.msg && (
+        <div className={`alert alert-${error.color}`} role="alert">
+          {error.msg}
+        </div>
+      )}
     </div>
   );
 };

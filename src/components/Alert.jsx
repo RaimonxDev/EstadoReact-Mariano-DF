@@ -1,14 +1,15 @@
-import Alert from 'react-bootstrap/Alert';
+import React from 'react';
 
-// eslint-disable-next-line react/prop-types
-function BasicExample({message, type}) {
+const Alert = ({ error, msg, color }) => {
   return (
-    <>
-     <Alert variant={type}>
-          {message}
-      </Alert>
-    </>
+    <div>
+      {error ? (
+        <div className={`alert alert-${color}`} role="alert">
+          {msg}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
-export default BasicExample;
+export default Alert;
