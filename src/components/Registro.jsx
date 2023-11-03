@@ -3,8 +3,7 @@ import SocialButton from './SocialButton';
 import Formulario from './Formulario';
 import Alert from './Alert';
 
-const Registro = () => {
-  const [error, setError] = useState({ error: false, msg: '', color: '' });
+const Registro = ({error, setError}) => {
 
   const handleFormSubmit = (error) => {
     setError(error);
